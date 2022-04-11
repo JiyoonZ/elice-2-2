@@ -10,6 +10,8 @@
 
   gtag('config', 'G-VNE0N3RM0S');
 </script>
+<!-- 구글 방문자 추적위한 코드 -->
+
     <title>WEB - Welcome</title>
     <meta charset="utf-8" />
     <style>
@@ -41,6 +43,20 @@
     </style>
   </head>
   <body>
+    <input type="button" value="night" 
+      onclick="
+        document.querySelector('body').style.backgroundColor = 'black';
+        document.querySelector('*').style.color = 'white';
+        
+      "
+    >
+    <input type="button" value="day" 
+      onclick="
+        document.querySelector('body').style.backgroundColor = 'white';
+        document.querySelector('body').style.color = 'black';
+        
+      "
+    >
     <h1><a href="index.html">Zeeyooni Todo List</a></h1>
     <strong> <u>Today's</u> Todo List</strong>.<br/>
     <div id="container">
