@@ -43,18 +43,27 @@
     </style>
   </head>
   <body>
+    <script>
+      console.log(this); //window ; 브라우저와 약속된 내장된 변수
+    </script>
+    <input type="button" onclick="console.log(this);" value="1">
+    <input type="button" onclick="console.log(this);" value="2">
     <input type="button" value="night" 
       onclick="
+      if(this.value === 'night') {
         document.querySelector('body').style.backgroundColor = 'black';
-        document.querySelector('*').style.color = 'white';
-        
-      "
-    >
-    <input type="button" value="day" 
-      onclick="
+        document.querySelector('*').style.color = 'white';    
+        // 쿼리 선택자로 하면 2가지 모두 Input 이기때문에 value값 추적이 어려움   
+        // document.querySelector('input').value = 'day';
+        this.value = 'day';
+        console.log(this);
+      } else if (this.value === 'day'){
         document.querySelector('body').style.backgroundColor = 'white';
-        document.querySelector('body').style.color = 'black';
-        
+        document.querySelector('*').style.color = 'black'; 
+        // document.querySelector('input').value('night');
+        this.value = 'night';
+        console.log(this);
+      }
       "
     >
     <h1><a href="index.html">Zeeyooni Todo List</a></h1>
