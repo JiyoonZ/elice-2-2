@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WEB</title>
+  </head>
+  <body>
+   
+    JavaScript is <span class="toggle"><input type="button" value="..." onclick="
+      if (this.value === '...') {
+        document.querySelector('.para').style.display='inline';
+        this.style.display='none';
+        //여기서 this = document.querySelector('.toggle') 
+      } 
+      "></span> <span class="para" style="display: none;"> ipsum dolor sit amet, consectetur adipisicing elit. Quam laboriosam at incidunt dignissimos inventore voluptatem voluptate earum exercitationem eum repudiandae esse nisi, reprehenderit sequi reiciendis dicta iusto sint, expedita ratione.</span>
+      <hr>
+      
+      JavaScript is <span 
+      style="
+          background-color:rgb(215, 215, 215);
+          padding:0 5px;
+          cursor:pointer;
+      " 
+      onclick="
+          this.style.display='none';
+          document.querySelector('#content').innerHTML = `ipsum dolor sit amet, consectetur adipisicing elit. Quam laboriosam at incidunt dignissimos inventore voluptatem voluptate earum exercitationem eum repudiandae esse nisi, reprehenderit sequi reiciendis dicta iusto sint, expedita ratione.`;
+      ">...</span> 
+      <span id="content"></span>
+  </body>
+</html>
