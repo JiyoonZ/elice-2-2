@@ -1,110 +1,90 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <head>
-        <title>WEB - Welcome</title>
-        <meta charset="utf-8">
-        <style>
-            h1{
-                border-bottom:10px solid green;
-                padding:30px;
-                margin-bottom:0;
-            }
-            h1 a{
-                text-decoration: none;
-            }
-            ol{
-                
-                margin-top:0;
-            }
-            @media all and (min-width: 480px) {
-                #container{
-                    display:grid;
-                    grid-template-columns: 150px 1fr;
-                }
-                ol{
-                    border-right:10px solid pink;
-                }
-            }
-            
-        </style>
-    </head>
-    <body>
-        <script>
-            console.log(this);
-        </script>
-        <input type="button" onclick="console.log(this);" value="1">
-        <input type="button" onclick="console.log(this);" value="2">
-        <script>
-            function night() {
-                document.querySelector('body').style.backgroundColor = 'black';
-                document.querySelector('body').style.color = 'white';
-                let as = document.querySelectorAll('a');
-                for(let i=0; i<as.length; i++) {
-                    as[i].style.color='white';
-                }
-                //여기에 this 있으면 안된다. 
-            };
-            
-            function day() {
-                // 아니라면 아래 코드가 실행된다. 
-                document.querySelector('body').style.backgroundColor = 'white';
-                document.querySelector('body').style.color = 'black';
-                let as = document.querySelectorAll('a');
-                for(let i=0; i<as.length; i++) {
-                    as[i].style.color='black';
-                }
-            };
+  <head>
+    <title>WEB</title>
+    <script>
+      let topics = [ 
+        {id: 1, title:'html', body:'html is...' },
+        {id: 2, title:'css', body:'css is...' }
+      ]
+      let id = 4;
+    </script>
+  </head>
+  <body>
+    <!-- WEB -->
+    <h1><a href="index.html" onclick="
+        event.preventDefault();
+        article('Welcome', 'Hello, WEB!!!!!');
+      ">WEB</a></h1>
+    <nav>
+      <ol></ol>
+    </nav>
+    <article>
+      <h2>Welcome</h2>
+      Hello, WEB
+    </article>
+    <!-- Create BTN -->
+    <a href="/create" onclick="
+            event.preventDefault();
+            create();
+        ">Create</a>
+    <script>
+      const create = () => {
+        //create라는 클자 h2태그로 제목
+        // 본문 부분에 form 태그 넣기 
+        article('create', `                    
+                    <form onsubmit="
+                        event.preventDefault();
+                        const t = event.target.title.value;
+                        const b = event.target.body.value;
+                        
+                        console.log('id', id);
+                        topics.push({id:id, title:t, body:b});
+                        read(id);
+                        id++;
+                        nav();
+                    ">
+                        <p><input type="text" name="title" placeholder="제목을 입력해주세요."></p>
+                        <p><textarea name="body" placeholder="본문을 입력해주세요."></textarea></p>
+                        <p><input type="submit" value="Create"></p>
+                    </form>
+                  `);   
+      }
 
-            function dayNight (mode) {
-                if (mode === 'night') {
-                    night();
-                } else {
-                    day();
-                }
-            }
-        </script>
-        <input type="button" value="night" 
-            onclick="
-                // 만약에 이 버튼의 value 값이 night라면 아래 코드가 실행되고, 
-                if(this.value === 'night'){
-                    dayNight('night');
-                    // 이 버튼의 value값을 day로 변경한다. 
-                    // onclick 안에서의 this와 함수에서의 this가 다르기 때문에 여기에 적어주기
-                    this.value = 'day'; 
-                } else {
-                    dayNight('day');
-                    // 이 버튼의 value값을 night로 변경한다. 
-                    this.value = 'night';
-                }
-            "
-        >
-<!--         
-        <input type="button" value="night" 
-            onclick="
-                document.querySelector('body').style.backgroundColor = 'black';
-                document.querySelector('body').style.color = 'white';
-            "
-        >
-        <input type="button" value="day" 
-            onclick="
-                document.querySelector('body').style.backgroundColor = 'white';
-                document.querySelector('body').style.color = 'black';
-            "
-        > -->
-        <h1><a href="index.html">WEB</a></h1>
 
-        <div id="container">
-            <ol>
-                <li><a href="1.html">html</a></li>
-                <li><a href="2.html">css</a></li>
-                <li><a href="3.html">javascript</a></li>
-            </ol>
-            <div>
-                <h2>Welcome</h2>
-                Hello, WEB!!!!!
-            </div>
-        </div>
-        
-    </body>
+    // 클릭하는 요소마다 article 태그에 불러오기
+    // 매개변수로 받아온 id와 topics 데이터에 있는 id가 일치할경우 아래 본문에 출력 
+      const read = (id) => {
+        for(let i=0; i<topics.length; i++) {
+          if(topics[i].id === id) {
+            article(topics[i].title, topics[i].body);
+            break;
+          }
+        }
+      }
+    
+    //  TOPICS 배열을 nav 태그 내부에 넣기
+    // 클릭하면 read 함수 호출하기 (출력)
+      let nav = () => {
+        let nav = '';
+        for(let i=0; i<topics.length; i++) {
+          nav += `<li><a href="/read/${topics[i].id}" id="${topics[i].id}" onclick="
+                      event.preventDefault();
+                      read(${topics[i].id});
+                    ">${topics[i].title}</a></li>`;
+        }
+        document.querySelector('nav ol').innerHTML = nav;
+        console.log(nav);
+      }
+      nav();
+
+      //아래 article 태그 내부에 덮어씌기! 
+      const article = (title, body) => {
+        document.querySelector('article').innerHTML = `<h2>${title}</h2>${body}`
+      }
+      
+    </script>
+  
+  </body>
+
 </html>
